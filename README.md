@@ -1,4 +1,4 @@
-## Quickly Provision a HA Rancher Server on K3S cluster locally over KVM
+# Quickly Provision a HA Rancher Server on K3S cluster locally over KVM
 Rancher advise to use K3S rather RKE, because it is lightweight and use the same for rancher k8s management plane.
 
 The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multi nodes HA scenario or using mysql as back-end.
@@ -8,7 +8,7 @@ And almost none of the available script made for KVM, I call it poor man'e virtu
 Things should relatively simple to setup a HA rancher server over K3S, K8S cluster, but I had to spent a day & half to make it work properly locally with certificate and a layer 2 load balancer with KVM and wish no one else need to do the same.
 
 
-# k3s-rancher setup on KVM
+## k3s-rancher setup on KVM
 Run k3s-rancher-setup.sh which will do the following (You can change the number of master nodes or worker nodes in the vagrant script provided)
 
 - Check if any existing files needs to be removed or not like token to join the k3s nodes
@@ -27,7 +27,7 @@ Run k3s-rancher-setup.sh which will do the following (You can change the number 
     - make changes to your /etc/hosts so that your host recognize custom domain name, it should point to the ip address (provisioned after ingress controller gets installed) MetalB load balancer will resolve
 - Finally it installs rancher server (you have to change the hostname accordingly)
 
-# k3s-rancher prequisites 
+## k3s-rancher prequisites 
 Setup expects you have setup and configured following on host
 - KVM
 - Vagrant and Vagrant libvirt provider (to use KVM)
