@@ -1,0 +1,65 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Install packages that allow apt to be used over HTTPS
+    apt:
+      name: "{{ packages }}"
+      state: present
+      update_cache: yes
+    vars:
+      packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+  - name: Remove swapfile from /etc/fstab
+    mount:
+      name: "{{ item }}"
+      fstype: swap
+      state: absent
+    with_items:
+      - swap
+      - none
+
+  - name: Disable swap
+    command: swapoff -a
+    when: ansible_swaptotal_mb > 0
+  
+  - name: Copy the k3s install command to server location
+    copy: src=k3s-master-install.sh dest=/tmp/k3s-install.sh remote_src=no mode=0777
+
+  - name: Setup k3s
+    command: "{{ item }}"
+    with_items:
+     - sh /tmp/k3s-install.sh
+
+  - name: Generate access token command
+    command: sudo cat /var/lib/rancher/k3s/server/node-token
+    register: access_token_command 
+
+  - debug:
+      var: access_token_command.stdout
+
+  - name: Copy access token command to local file
+    local_action: copy content="{{ access_token_command.stdout_lines[0] }}" dest="./access_token_command"
+    become_user: vindpro
+    run_once: true
+
+  - name: Access Kube Config
+    command: sudo cat /etc/rancher/k3s/k3s.yaml
+    register: kube_config 
+
+  - debug:
+      var: kube_config
+
+  - name: Copy kubeconfig to local file
+    local_action: copy content="{{ kube_config.stdout }}" dest="./kube_config"
+    become_user: vindpro
+    run_once: true
+
+  handlers:
+    - name: docker status
+      service: name=docker state=started 
