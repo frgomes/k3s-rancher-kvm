@@ -1,14 +1,15 @@
+## Quickly Provision a HA Rancher Server on K3S cluster locally over KVM
 Rancher advise to use K3S rather RKE, because it is lightweight and use the same for rancher k8s management plane.
 
-The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multinodes HA scenario or using mysql as backend.
+The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multi nodes HA scenario or using mysql as back-end.
 
 And almost none of the available script made for KVM, I call it poor man'e virtualization solution.
 
-Things should relatively simple to setup a HA rancher server over K3S K8S cluster, but I had to spent a day & half to make it work properly locally with certificate and a layer 2 load balancer with KVM and wish noone else need to do the same.
+Things should relatively simple to setup a HA rancher server over K3S, K8S cluster, but I had to spent a day & half to make it work properly locally with certificate and a layer 2 load balancer with KVM and wish no one else need to do the same.
 
 
 # k3s-rancher setup on KVM
-Run k3s-rancher-setup.sh which will do the following 9You can change the number of master nodes or worker nodes in the vagrant script provided)
+Run k3s-rancher-setup.sh which will do the following (You can change the number of master nodes or worker nodes in the vagrant script provided)
 
 - Check if any existing files needs to be removed or not like token to join the k3s nodes
 - checks and remove existing rancher mysql db name "dbrancher", but you can change the db name
@@ -34,4 +35,4 @@ Setup expects you have setup and configured following on host
 - kubctl client
 - mysql
     - you can have a fulblown mysql setup or a container, 
-    - be carefull about the mysql host name which should be accessible from inside the master nodes.
+    - be careful about the mysql host name which should be accessible from inside the master nodes.
