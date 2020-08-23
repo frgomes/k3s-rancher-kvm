@@ -8,7 +8,7 @@ Things should relatively simple to setup a HA rancher server over K3S K8S cluste
 
 
 # k3s-rancher setup on KVM
-Run k3s-rancher-setup.sh which will do the following
+Run k3s-rancher-setup.sh which will do the following 9You can change the number of master nodes or worker nodes in the vagrant script provided)
 
 - Check if any existing files needs to be removed or not like token to join the k3s nodes
 - checks and remove existing rancher mysql db name "dbrancher", but you can change the db name
@@ -32,3 +32,6 @@ Setup expects you have setup and configured following on host
 - Vagrant and Vagrant libvirt provider (to use KVM)
 - helm
 - kubctl client
+- mysql
+    - you can have a fulblown mysql setup or a container, 
+    - be carefull about the mysql host name which should be accessible from inside the master nodes.
