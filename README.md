@@ -1,10 +1,19 @@
+Rancher advise to use K3S rather RKE, because it is lightweight and use the same for rancher k8s management plane.
+
+The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multinodes HA scenario or using mysql as backend.
+
+And almost none of the available script made for KVM, I call it poor man'e virtualization solution.
+
+Thhings should relatively simple to setup a HA rancher server over K3S K8S cluster, but I had to spent a day to make it work with KVM and wish noone else need to do the same.
+
+
 # k3s-rancher setup on KVM
 Run k3s-rancher-setup.sh which will do the following
 
 - Check if any existing files needs to be removed or not like token to join the k3s nodes
 - checks and remove existing rancher mysql db name "dbrancher", but you can change the db name
 - launch vagrant up 
-    - to deploy a 3 nodes k8s cluster using ansible 
+    - to deploy a 3 nodes k8s cluster using vagrant & ansible 
     - and use mysql as backend storage
 - update the ip of the generated kube config file to point to the master node
 - create a backup of your existing kube config and replace the same with the k3s cluster just been created.
