@@ -1,4 +1,4 @@
-# Quickly Provision a HA Rancher Server on K3S cluster locally over KVM
+# Quickly Provision a HA Rancher Management Server on K3S cluster locally over KVM
 Rancher advise to use K3S rather RKE, because it is lightweight and use the same for rancher k8s management plane.
 
 The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multi nodes HA scenario or using mysql as back-end.
