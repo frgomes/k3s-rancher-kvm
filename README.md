@@ -18,7 +18,7 @@ Run k3s-rancher-setup.sh which will do the following
 - Finally it installs rancher server (you have to change the hostname accordingly)
 
 # k3s-rancher prequisites 
-Setup expects you have seyup and configured following
+Setup expects you have setup and configured following on host
 - KVM
 - Vagrant and Vagrant libvirt provider (to use KVM)
 - helm
