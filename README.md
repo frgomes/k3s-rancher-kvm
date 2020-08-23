@@ -3,7 +3,7 @@ Rancher advise to use K3S rather RKE, because it is lightweight and use the same
 
 The documentation is really very poor and if you have followed the same recently its not going to work as it is, specially multi nodes HA scenario or using mysql as back-end.
 
-And almost none of the available script made for KVM, I call it poor man'e virtualization solution.
+And almost none of the available script made for KVM, I call it poor man's virtualization solution.
 
 Things should relatively simple to setup a HA rancher server over K3S, K8S cluster, but I had to spent a day & half to make it work properly locally with certificate and a layer 2 load balancer with KVM and wish no one else need to do the same.
 
