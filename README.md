@@ -4,7 +4,7 @@ The documentation is really very poor and if you have followed the same recently
 
 And almost none of the available script made for KVM, I call it poor man'e virtualization solution.
 
-Thhings should relatively simple to setup a HA rancher server over K3S K8S cluster, but I had to spent a day to make it work with KVM and wish noone else need to do the same.
+Things should relatively simple to setup a HA rancher server over K3S K8S cluster, but I had to spent a day & half to make it work properly locally with certificate and a layer 2 load balancer with KVM and wish noone else need to do the same.
 
 
 # k3s-rancher setup on KVM
