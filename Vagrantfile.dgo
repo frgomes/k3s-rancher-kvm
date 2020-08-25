@@ -1,0 +1,58 @@
+DO_BOX_URL = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+PRIVATE_KEY_PATH = "~/certs/sshkey.pub"
+TOKEN = ENV['TOKEN']
+
+N = 2
+
+Vagrant.configure("2") do |config|
+    config.vm.define "k8s-master" do |droplet|
+        droplet.vm.provider :digital_ocean do |provider, override|
+            override.vm.network "private_network", ip: "192.168.50.10"
+            override.vm.hostname = "k8s-master"
+            override.ssh.private_key_path = PRIVATE_KEY_PATH
+            override.vm.box = 'digital_ocean'
+            override.vm.box_url = DO_BOX_URL
+            override.nfs.functional = false
+            override.vm.allowed_synced_folder_types = :rsync
+            provider.token = TOKEN
+            provider.image = 'ubuntu-18-04-x64'
+            provider.region = 'tor1'
+            provider.size = 's-2vcpu-4gb'
+            provider.ssh_key_name ='cloud-ssh'
+            #provider.private_networking = true
+            override.vm.provision "ansible" do |ansible|
+                ansible.playbook = "kubernetes-setup/master-playbook.yml"
+                ansible.extra_vars = {
+                    node_ip: "192.168.50.10",
+                }
+            end
+        end
+    end
+
+
+    (1..N).each do |i|
+        config.vm.define "node-#{i}" do |droplet|
+            droplet.vm.provider :digital_ocean do |provider, override|
+                override.vm.network "private_network", ip: "192.168.50.#{i + 10}"
+                override.vm.hostname = "node-#{i}"
+                override.ssh.private_key_path = PRIVATE_KEY_PATH
+                override.vm.box = 'digital_ocean'
+                override.vm.box_url = DO_BOX_URL
+                override.nfs.functional = false
+                override.vm.allowed_synced_folder_types = :rsync
+                provider.token = TOKEN
+                provider.image = 'ubuntu-18-04-x64'
+                provider.region = 'tor1'
+                provider.size = 's-1vcpu-2gb'
+                provider.ssh_key_name ='cloud-ssh'
+                #provider.private_networking = true
+                override.vm.provision "ansible" do |ansible|
+                    ansible.playbook = "kubernetes-setup/node-playbook.yml"
+                    ansible.extra_vars = {
+                        node_ip: "192.168.50.#{i + 10}",
+                    }
+                end
+            end
+        end
+    end
+end
