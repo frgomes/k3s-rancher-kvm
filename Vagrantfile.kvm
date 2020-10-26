@@ -1,6 +1,6 @@
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 
-IMAGE_NAME = "generic/ubuntu1804"
+IMAGE_NAME = "debian/buster64"
 N = 2
 
 Vagrant.configure("2") do |config|
